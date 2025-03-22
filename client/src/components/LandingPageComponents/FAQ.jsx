@@ -7,7 +7,7 @@ import {
 
 function AccordionDemo() {
     return (
-        <Accordion type="single" collapsible className="w-full px-4 md:px-8 py-10 md:py-20">
+        <Accordion type="single" collapsible className="w-full px-4 md:px-8 py-10 md:py-20 bg-black">
             <div className="py-4 mb-4 flex flex-col items-center">
                 <h2 className="text-3xl md:text-5xl font-bold"> Frequently Asked <span className='text-green-500'>Questions</span></h2>
             </div>
