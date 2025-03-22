@@ -7,6 +7,7 @@ export default {
   ],
   theme: {
   	extend: {
+		
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -80,11 +81,30 @@ export default {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
+        glow: {
+          '0%, 100%': { boxShadow: '0 0 5px #ff7eb3' }, // New glow color
+          '50%': { boxShadow: '0 0 30px #ff7eb3' }, // New glow color
+        },
+        'glow-move': {
+          '0%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '100% 50%' },
+        },
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: "0",
+          },
+        },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+        glow: 'glow 4s infinite',
+        'glow-move': 'glow-move 3s linear infinite',
+        'meteor-effect': 'meteor 5s linear infinite',
   		}
   	}
   },

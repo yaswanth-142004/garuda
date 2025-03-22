@@ -3,6 +3,18 @@ import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { CheckCheckIcon } from "lucide-react";
 import Hero from "../../assets/Hero.svg";
+import { TypewriterEffectSmooth } from "../ui/typewriter-effect";
+import { HoverBorderGradient } from "../ui/hover-border-gradient";
+
+const words = [
+  {
+    text: "Resume",
+    className: "text-blue-500 dark:text-blue-500",
+  },
+  {
+    text: "Tailoring",
+  },
+];
 
 const HeroSection = () => {
   return (
@@ -15,11 +27,12 @@ const HeroSection = () => {
             </span>
             Your Career with <br />
           </h1>
-          Effortless
           <h2 className="inline">
-            <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-              {" "}
-              Resume Tailoring
+            <span className="inline bg-white text-transparent bg-clip-text">
+              Effortless{" "}
+              <span className="inline-flex items-center">
+                <TypewriterEffectSmooth words={words} />
+              </span>
             </span>
           </h2>
         </main>
@@ -29,9 +42,9 @@ const HeroSection = () => {
         </p>
         <div className="flex justify-center lg:justify-start">
           <Link to="/auth">
-            <Button className="bg-[#77a388]">
-              <CheckCheckIcon /> Get Started
-            </Button>
+          <HoverBorderGradient containerClassName="rounded-full" as="button"  className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2" >
+            <span>Getting Started</span>
+          </HoverBorderGradient>
           </Link>
         </div>
       </div>

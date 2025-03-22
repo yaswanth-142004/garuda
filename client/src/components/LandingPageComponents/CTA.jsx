@@ -7,10 +7,12 @@ import {
     CardContent,
 } from "../ui/card";
 import CTAImg from "../../assets/CTA.svg";
+import { BackgroundGradient } from "../ui/background-gradient";
 
 const CTA = () => {
     return (
-        <Card className="mx-8 p-6 rounded-lg shadow-lg flex flex-col md:flex-row-reverse md:items-center space-y-6 md:space-y-0 md:space-x-6" id="about">
+        <BackgroundGradient className="md:p-0" containerClassName="bg-black">
+        <Card className="bg-black mx-8 p-6 rounded-lg shadow-lg flex flex-col md:flex-row-reverse md:items-center space-y-6 md:space-y-0 md:space-x-6" id="about">
             {/* Content Section */}
             <div className="w-full md:w-3/4 space-y-4">
                 {/* Heading */}
@@ -20,16 +22,17 @@ const CTA = () => {
 
                 {/* Description */}
                 <CardDescription className="text-center pb-5 md:text-left">
-                    Uply is an AI-powered career tool designed to streamline your job
+                    Garuda is an AI-powered career tool designed to streamline your job
                     application process. It offers dynamic resume creation and cover
                     letter generation tailored to specific job descriptions, automated
                     portfolio management with real-time updates, and curated practice
-                    questions for interviews. With Uply, you can save time, stay prepared,
+                    questions for interviews. With Garuda, you can save time, stay prepared,
                     and effortlessly showcase your best self for every opportunity.
                 </CardDescription>
 
                 {/* Stats Section */}
                 <CardContent>
+
                     <div className="grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
                         <div>
                             <h3 className="text-2xl font-bold">2.7K+</h3>
@@ -56,6 +59,7 @@ const CTA = () => {
                 />
             </div>
         </Card>
+    </BackgroundGradient>
     );
 };
 
