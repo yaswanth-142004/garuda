@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { CheckCheckIcon } from "lucide-react";
 import Hero from "../../assets/Hero.svg";
 import { TypewriterEffectSmooth } from "../ui/typewriter-effect";
+import { HoverBorderGradient } from "../ui/hover-border-gradient";
 
 const words = [
   {
@@ -41,9 +42,9 @@ const HeroSection = () => {
         </p>
         <div className="flex justify-center lg:justify-start">
           <Link to="/auth">
-            <Button className="bg-[#77a388]">
-              <CheckCheckIcon /> Get Started
-            </Button>
+          <HoverBorderGradient containerClassName="rounded-full" as="button"  className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2" >
+            <span>Getting Started</span>
+          </HoverBorderGradient>
           </Link>
         </div>
       </div>

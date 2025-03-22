@@ -12,11 +12,10 @@ import { SparklesCore } from '@/components/ui/sparkles'
 
 const LandingPage = () => {
   return (
-    <div className="relative w-full min-h-screen bg-[#171717] text-white">
+    <div className="relative w-full min-h-screen bg-[#000000] text-white">
       <div className="fixed inset-0 -z-10">
         </div>
       <div className="relative z-10 w-full">
-        <Navbar />
         <HeroSection />
         <CTA />
         <Features />

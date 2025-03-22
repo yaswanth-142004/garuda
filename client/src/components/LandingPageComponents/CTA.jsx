@@ -7,10 +7,12 @@ import {
     CardContent,
 } from "../ui/card";
 import CTAImg from "../../assets/CTA.svg";
+import { Boxes } from "../ui/background-boxes";
+import { cn } from "@/lib/utils";
 
 const CTA = () => {
     return (
-        <Card className="mx-8 p-6 rounded-lg shadow-lg flex flex-col md:flex-row-reverse md:items-center space-y-6 md:space-y-0 md:space-x-6" id="about">
+        <Card className="bg-black mx-8 p-6 rounded-lg shadow-lg flex flex-col md:flex-row-reverse md:items-center space-y-6 md:space-y-0 md:space-x-6" id="about">
             {/* Content Section */}
             <div className="w-full md:w-3/4 space-y-4">
                 {/* Heading */}
@@ -30,6 +32,7 @@ const CTA = () => {
 
                 {/* Stats Section */}
                 <CardContent>
+
                     <div className="grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
                         <div>
                             <h3 className="text-2xl font-bold">2.7K+</h3>
