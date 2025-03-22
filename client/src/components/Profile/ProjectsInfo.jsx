@@ -167,7 +167,7 @@ function ProjectsInfo({ formRef, onSuccess }) {
                         ))}
 
                         <Button type="button" variant="outline" onClick={addProject}>Add Another Project</Button>
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" className="ml-4">Submit</Button>
                     </form>
                 </Form>
             )}

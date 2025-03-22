@@ -146,7 +146,7 @@ function WorkInfo({ formRef, onSuccess }) {
                         ))}
 
                         <Button type="button" variant="outline" onClick={addWorkExperience}>Add Another Experience</Button>
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" className="ml-4">Submit</Button>
                     </form>
                 </Form>
             )}

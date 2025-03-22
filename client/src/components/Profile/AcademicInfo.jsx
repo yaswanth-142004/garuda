@@ -112,7 +112,7 @@ function AcademicInfo({ formRef, onSuccess }) {
                         ))}
 
                         <Button type="button" variant="outline" onClick={addEntry}>Add Another</Button>
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" className="ml-4" >Submit</Button>
                     </form>
                 </Form>
             )}

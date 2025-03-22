@@ -88,7 +88,7 @@ function AchievementInfo({ formRef, onSuccess }) {
                             </div>
                         ))}
                         <Button type="button" variant="outline" onClick={addAchievement}>Add Another Achievement</Button>
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" className="ml-4">Submit</Button>
                     </form>
                 </Form>
             )}
