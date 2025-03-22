@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Fixed Topbar */}
-      <div className="sticky top-0 left-0 w-full z-50 shadow-md">
+      <div className="sticky top-0 left-0 w-full z-50 shadow-md ">
         <Topbar />
       </div>
 

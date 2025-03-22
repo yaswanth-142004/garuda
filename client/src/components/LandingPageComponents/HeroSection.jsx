@@ -47,7 +47,7 @@ const HeroSection = () => {
           every job opportunity, all in just a few clicks.
         </p>
         <div className="flex justify-center lg:justify-start">
-          <Link to="/auth">
+          <Link to="/login">
             <HoverBorderGradient
               containerClassName="rounded-full"
               as="button"
