@@ -58,20 +58,14 @@ export const FollowerPointerCard = ({
 export const FollowPointer = ({
   x,
   y,
-  title
+  
 }) => {
   const colors = [
     "#0ea5e9",
-    "#737373",
-    "#14b8a6",
-    "#22c55e",
-    "#3b82f6",
-    "#ef4444",
-    "#eab308",
   ];
   return (
     <motion.div
-      className="absolute z-50 h-4 w-4 rounded-full"
+      className="absolute z-50 h-4 w-4"
       style={{
         top: y,
         left: x,
@@ -101,51 +95,7 @@ export const FollowPointer = ({
         <path
           d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"></path>
       </svg>
-      <motion.div
-        style={{
-          backgroundColor: colors[Math.floor(Math.random() * colors.length)],
-        }}
-        initial={{
-          scale: 0.5,
-          opacity: 0,
-        }}
-        animate={{
-          scale: 1,
-          opacity: 1,
-        }}
-        exit={{
-          scale: 0.5,
-          opacity: 0,
-        }}
-        className={
-          "min-w-max rounded-full bg-neutral-200 px-2 py-2 text-xs whitespace-nowrap text-white"
-        }>
-        {title || `William Shakespeare`}
-      </motion.div>
+      
     </motion.div>
   );
 };
-
-const Pointer = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      setPosition({ x: event.clientX, y: event.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  return (
-    <div
-      className="fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-50 transition-transform duration-150 ease-out"
-      style={{
-        transform: `translate(${position.x - 8}px, ${position.y - 8}px)`,
-      }}
-    ></div>
-  );
-};
-
-export default Pointer;

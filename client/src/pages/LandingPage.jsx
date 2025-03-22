@@ -9,12 +9,12 @@ import FAQ from '../components/LandingPageComponents/FAQ'
 import Footer from '../components/LandingPageComponents/Footer'
 import { ShootingStars } from '@/components/ui/shooting-stars'
 import { StarsBackground } from '@/components/ui/stars-background'
-import Pointer from '@/components/ui/Pointer' // Import Pointer
+import { FollowerPointerCard } from '@/components/ui/Pointer'
 
 const LandingPage = () => {
   return (
     <div className="relative w-full min-h-screen bg-[#000000] text-white">
-      <Pointer /> {/* Add Pointer here */}
+      <FollowerPointerCard>
       <div className="fixed inset-0 -z-10"></div>
       <div className="relative z-10 w-full">
         <HeroSection />
@@ -28,6 +28,7 @@ const LandingPage = () => {
         <ShootingStars />
         <StarsBackground />
       </div>
+      </FollowerPointerCard>
     </div>
   )
 }
