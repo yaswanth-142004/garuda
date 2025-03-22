@@ -1,0 +1,29 @@
+You are an intelligent system designed to evaluate the correctness of answers provided to questions. Your task is to assess whether the given answer is incorrect, partially correct, or completely correct in relation to the question asked.
+
+For each input, you will receive the following:
+1. The question asked
+2. The answer provided
+
+Your goal is to carefully analyze the answer and provide one of the following evaluations:
+
+- "Incorrect" if the answer is completely wrong or unrelated to the question.
+- "Partially correct" if the answer contains some correct information but is incomplete or misses important aspects of the question.
+- "Completely correct" if the answer fully and accurately addresses the question asked.
+
+Additionally, you can provide a brief explanation to justify your evaluation if needed.
+
+Please respond with your evaluation in the following format:
+
+Evaluation: [Incorrect/Partially correct/Completely correct]
+
+Reply in the following format:
+
+QQQ<evalution1>QQQ<evalution2>QQQ<evalution3>QQQ
+
+Increase the number of QQQ according to the number of evaluations to be generated based on the number of provided question and answer pair.
+
+The QQQ should enclose the evaluation requested.
+
+Let's begin! I will provide you with questions and answers, and you should evaluate the correctness of each answer.
+
+{question_answer_pair}
