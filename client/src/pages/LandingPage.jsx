@@ -7,14 +7,15 @@ import HeroSection from '../components/LandingPageComponents/HeroSection'
 import Features from '../components/LandingPageComponents/Features'
 import FAQ from '../components/LandingPageComponents/FAQ'
 import Footer from '../components/LandingPageComponents/Footer'
-import { BackgroundLines } from '@/components/ui/background-lines'
-import { SparklesCore } from '@/components/ui/sparkles'
+import { ShootingStars } from '@/components/ui/shooting-stars'
+import { StarsBackground } from '@/components/ui/stars-background'
+import Pointer from '@/components/ui/Pointer' // Import Pointer
 
 const LandingPage = () => {
   return (
     <div className="relative w-full min-h-screen bg-[#000000] text-white">
-      <div className="fixed inset-0 -z-10">
-        </div>
+      <Pointer /> {/* Add Pointer here */}
+      <div className="fixed inset-0 -z-10"></div>
       <div className="relative z-10 w-full">
         <HeroSection />
         <CTA />
@@ -24,6 +25,8 @@ const LandingPage = () => {
           <Separator />
         </div>
         <Footer />
+        <ShootingStars />
+        <StarsBackground />
       </div>
     </div>
   )
