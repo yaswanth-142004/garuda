@@ -1,0 +1,11 @@
+fastapi
+langchain
+langchain-core
+langchain-openai
+langchain-community
+langgraph
+langchain-cli
+langchain_groq
+dotenv
+langchain_huggingface
+langchain_ollama
