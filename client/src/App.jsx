@@ -30,9 +30,9 @@ const App = () => {
               </ProtectedRoute>
             }
           >
-            <Route path="profile" element={<ProfilePage />} />
+         
           </Route>
-
+          <Route path="profile" element={<ProfilePage />} />
           <Route
             path="/resume"
             element={

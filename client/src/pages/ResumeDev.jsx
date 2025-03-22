@@ -15,7 +15,7 @@ function App() {
   return (
     <>
     <Topbar/>
-    <div className="flex h-screen bg-gray-950 p-6">
+    <div className="flex h-screen bg-black p-6">
       <div className="flex gap-6 w-full h-full">
         <div className="w-1/3">
           <ChatInterface onResumeData={handleResumeData} />
