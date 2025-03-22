@@ -3,7 +3,17 @@ import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { CheckCheckIcon } from "lucide-react";
 import Hero from "../../assets/Hero.svg";
-import { MovingBorder } from "../ui/movingBorder";
+import { TypewriterEffectSmooth } from "../ui/typewriter-effect";
+
+const words = [
+  {
+    text: "Resume",
+    className: "text-blue-500 dark:text-blue-500",
+  },
+  {
+    text: "Tailoring",
+  },
+];
 
 const HeroSection = () => {
   return (
@@ -16,11 +26,12 @@ const HeroSection = () => {
             </span>
             Your Career with <br />
           </h1>
-          Effortless
           <h2 className="inline">
-            <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-              {" "}
-              Resume Tailoring
+            <span className="inline bg-white text-transparent bg-clip-text">
+              Effortless{" "}
+              <span className="inline-flex items-center">
+                <TypewriterEffectSmooth words={words} />
+              </span>
             </span>
           </h2>
         </main>
@@ -28,11 +39,10 @@ const HeroSection = () => {
           Instantly create personalized resumes and cover letters tailored to
           every job opportunity, all in just a few clicks.
         </p>
-
         <div className="flex justify-center lg:justify-start">
           <Link to="/auth">
             <Button className="bg-[#77a388]">
-              <CheckCheckIcon />   Get Started
+              <CheckCheckIcon /> Get Started
             </Button>
           </Link>
         </div>

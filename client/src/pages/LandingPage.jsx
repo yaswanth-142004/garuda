@@ -8,12 +8,12 @@ import Features from '../components/LandingPageComponents/Features'
 import FAQ from '../components/LandingPageComponents/FAQ'
 import Footer from '../components/LandingPageComponents/Footer'
 import { BackgroundLines } from '@/components/ui/background-lines'
+import { SparklesCore } from '@/components/ui/sparkles'
 
 const LandingPage = () => {
   return (
-    <div className="relative w-full min-h-screen">
+    <div className="relative w-full min-h-screen bg-[#171717] text-white">
       <div className="fixed inset-0 -z-10">
-        <BackgroundLines />
         </div>
       <div className="relative z-10 w-full">
         <Navbar />
