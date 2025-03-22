@@ -1,8 +1,8 @@
 // Correct syntax
 import { useState, useEffect } from 'react'
-import ResumePreview from '../components/ResumeDev/ResumePreview'
-import resumeData from '../components/ResumeDev/resumeData.json'
-import ChatInterface from '../components/ResumeDev/ChatInterface'
+import ResumePreview from '../components/ResumeResearch/ResumePreview'
+import resumeData from '../components/ResumeResearch/resumeData.json'
+import ChatInterface from '../components/ResumeResearch/ChatInterface'
 import Topbar from '@/components/Topbar'
 
 function App({ resumeType = 'developer' }) {
