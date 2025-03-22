@@ -33,7 +33,7 @@ function PersonalInfo({ formRef, onSuccess }) {
     };
 
     return (
-        <Card className="p-4 w-full max-w-3xl bg-background border-none shadow-none">
+        <Card className="p-4 w-full max-w-3xl bg-black border-none shadow-none">
             {isSubmitted ? (
                 <div className="space-y-4 text-lg">
                     <p><strong>Name:</strong> {form.getValues("firstName")} {form.getValues("lastName")}</p>

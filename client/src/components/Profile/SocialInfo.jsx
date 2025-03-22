@@ -38,7 +38,7 @@ function SocialInfo({ formRef, onSuccess }) {
     };
 
     return (
-        <Card className="p-6 w-full max-w-3xl bg-background border-none shadow-none">
+        <Card className="p-6 w-full max-w-3xl bg-black border-none shadow-none">
             {isSubmitted ? (
                 <div className="space-y-4 text-lg">
                     <h2 className="text-xl font-semibold">Social Links</h2>
