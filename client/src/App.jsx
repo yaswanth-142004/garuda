@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import ProfilePage from './pages/ProfilePage';
 import ResumeDev from './pages/ResumeDev';
 import ChooseResume from './pages/ChooseResume';
+import ResumeResearch from './pages/ResumeResearch';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/auth" element={<Auth />} />
           <Route path="/resume/dev" element={<ResumeDev />} />
           <Route path="/resume" element={<ChooseResume />} />
+          <Route path='/resume/research' element={<ResumeResearch />} />
 
           <Route path="/:id/dashboard/" element={<Dashboard />} >
             <Route path="profile" element={<ProfilePage />} />
