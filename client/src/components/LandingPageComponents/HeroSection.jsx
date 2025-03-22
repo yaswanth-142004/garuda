@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { CheckCheckIcon } from "lucide-react";
 import Hero from "../../assets/Hero.svg";
+import { MovingBorder } from "../ui/movingBorder";
 
 const HeroSection = () => {
   return (
@@ -27,10 +28,11 @@ const HeroSection = () => {
           Instantly create personalized resumes and cover letters tailored to
           every job opportunity, all in just a few clicks.
         </p>
+
         <div className="flex justify-center lg:justify-start">
           <Link to="/auth">
             <Button className="bg-[#77a388]">
-              <CheckCheckIcon /> Get Started
+              <CheckCheckIcon />   Get Started
             </Button>
           </Link>
         </div>
