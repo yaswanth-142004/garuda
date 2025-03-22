@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ToggleTheme from "./ToggleTheme";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for redirection
@@ -63,7 +62,7 @@ const Topbar = () => {
 
       {/* Right Side: Theme Toggle, Avatar, and Sign Out */}
       <div className="flex items-center gap-6 bg-black">
-        <ToggleTheme />
+
         <div className="flex items-center gap-4">
           <Link to="/profile">
             <Avatar

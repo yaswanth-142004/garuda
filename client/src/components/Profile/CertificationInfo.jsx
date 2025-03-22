@@ -99,7 +99,7 @@ function CertificationInfo({ formRef, onSuccess }) {
                             </div>
                         ))}
                         <Button type="button" variant="outline" onClick={addCertification}>Add Another Certification</Button>
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" className="ml-4">Submit</Button>
                     </form>
                 </Form>
             )}
