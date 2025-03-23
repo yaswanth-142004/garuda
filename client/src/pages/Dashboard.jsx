@@ -5,11 +5,11 @@ import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 
 const words = [
   {
-    text: "Lets",
-    className: "text-blue-500 dark:text-blue-500 text-5xl",
+    text: "L e t s ",
+    className: "text-blue-500 dark:text-pink-500 text-5xl",
   },
   {
-    text: " Build...",
+    text: "  B u i l d . . .",
     className: "text-yellow-200 dark:text-yellow-500 text-5xl",
   },
 ];
@@ -23,9 +23,8 @@ const Dashboard = () => {
       </div>
 
       {/* Scrollable Content */}
-      <div className=" ml-[42%] mt-[22%]">
+      <div className=" ml-[40%] mt-[22%]">
         <TypewriterEffectSmooth words={words} />
-        <Outlet />
       </div>
     </div>
   );
