@@ -1,147 +1,136 @@
 {
     "_id": "67d854e46af0e3f8c3993926",
     "skills": [
-      "JavaScript",
-      "React",
-      "Node.js",
-      "fastAPI"
+      {"category": "Programming Languages", "name": "Python (intermediate)"},
+      {"category": "Programming Languages", "name": "R (beginner)"},
+      {"category": "Programming Languages", "name": "MATLAB (intermediate)"},
+      {"category": "Software", "name": "LaTeX"},
+      {"category": "Software", "name": "Git"},
+      {"category": "Data Analysis", "name": "Statistical Analysis"},
+      {"category": "Data Analysis", "name": "Machine Learning"},
+      {"category": "Laboratory", "name": "PCR"},
+      {"category": "Laboratory", "name": "Gel Electrophoresis"}
     ],
     "academic": [
       {
-        "institution": "Delhi Public School",
-        "degree": "High School",
-        "fieldOfStudy": "Science",
-        "startDate": "2015-04-01T00:00:00.000Z",
-        "endDate": "2017-03-31T00:00:00.000Z",
-        "description": "Completed high school with Science stream.",
-        "grade": "A"
-      },
-      {
-        "institution": "SRM University AP",
-        "degree": "B.Tech",
-        "fieldOfStudy": "Computer Science",
-        "startDate": "2020-08-01T00:00:00.000Z",
-        "endDate": "2024-06-01T00:00:00.000Z",
-        "description": "Studied Artificial Intelligence and Blockchain.",
-        "grade": "A"
-      }
-    ],
-    "projects": [
-      {
-        "title": "AI Chatbot",
-        "description": "Developed an AI-based chatbot for customer support.",
-        "startDate": "2023-01-01T00:00:00.000Z",
-        "endDate": "2023-06-01T00:00:00.000Z",
-        "technologiesUsed": [
-          "Python",
-          "TensorFlow",
-          "Flask"
-        ],
-        "projectLink": "https://github.com/user/ai-chatbot",
-        "isOpenSource": true
-      },
-      {
-        "title": "Blockchain-Based Voting System",
-        "description": "Created a secure blockchain-based voting platform.",
+        "institution": "University of Science",
+        "degree": "Bachelor of Science",
+        "fieldOfStudy": "Computational Biology",
         "startDate": "2022-09-01T00:00:00.000Z",
-        "endDate": "2023-03-01T00:00:00.000Z",
-        "technologiesUsed": [
-          "Solidity",
-          "Ethereum",
-          "React"
-        ],
-        "projectLink": "https://github.com/user/blockchain-voting",
-        "isOpenSource": true
+        "endDate": "",
+        "description": "Focus on computational approaches to biological complexity. Minor in Mathematics.",
+        "grade": "3.85/4.0",
+        "location": "Boston, MA"
+      },
+      {
+        "institution": "Science Academy High School",
+        "degree": "High School Diploma",
+        "fieldOfStudy": "Science and Mathematics",
+        "startDate": "2018-09-01T00:00:00.000Z",
+        "endDate": "2022-06-01T00:00:00.000Z",
+        "description": "Advanced Placement courses in Biology, Chemistry, and Computer Science.",
+        "grade": "4.0/4.0",
+        "location": "Chicago, IL"
       }
     ],
     "workEx": [
       {
-        "company": "Google",
-        "position": "Software Engineer",
-        "startDate": "2022-06-01T00:00:00.000Z",
-        "endDate": "2024-03-01T00:00:00.000Z",
-        "description": "Worked on AI-powered search algorithms.",
-        "isCurrent": false
+        "company": "Complexity Research Institute",
+        "position": "Undergraduate Research Assistant",
+        "startDate": "2023-06-01T00:00:00.000Z",
+        "endDate": "2023-08-31T00:00:00.000Z",
+        "description": "Assisted with data collection and analysis for a study on complex systems in ecology. Developed computational models to simulate population dynamics in changing environments.",
+        "isCurrent": false,
+        "type": "research",
+        "location": "Boston, MA",
+        "achievements": ["Developed Python package for ecological data analysis", "Presented findings at lab meeting"]
       },
       {
-        "company": "Microsoft",
-        "position": "Senior Developer",
-        "startDate": "2024-04-01T00:00:00.000Z",
-        "description": "Developing cloud-based applications.",
-        "isCurrent": true
+        "company": "University Biology Department",
+        "position": "Laboratory Assistant",
+        "startDate": "2022-10-01T00:00:00.000Z",
+        "endDate": "",
+        "description": "Support faculty and graduate students with laboratory experiments. Maintain equipment and prepare solutions for molecular biology experiments.",
+        "isCurrent": true,
+        "type": "research",
+        "location": "Boston, MA",
+        "achievements": ["Trained 5 new student assistants", "Implemented improved inventory tracking system"]
+      },
+      {
+        "company": "Local Science Museum",
+        "position": "Science Educator",
+        "startDate": "2022-06-01T00:00:00.000Z",
+        "endDate": "2022-09-01T00:00:00.000Z",
+        "description": "Conducted interactive demonstrations for museum visitors. Explained scientific concepts to audiences of various ages.",
+        "isCurrent": false,
+        "type": "other",
+        "location": "Boston, MA",
+        "achievements": ["Developed new demonstration on complexity in nature", "Received excellent visitor feedback"]
       }
     ],
-    "certifications": [
+    "projects": [
       {
-        "name": "AWS Certified Solutions Architect",
-        "issuingOrganization": "Amazon Web Services",
-        "issueDate": "2023-05-10T00:00:00.000Z",
-        "expirationDate": "2026-05-10T00:00:00.000Z",
-        "credentialId": "AWS-12345",
-        "credentialURL": "https://aws.amazon.com/certification/verify/"
+        "title": "Emergent Patterns in Cellular Automata",
+        "description": "Independent research project examining how complex patterns emerge from simple rules in cellular automata. Implemented various rule sets and analyzed resulting patterns using quantitative metrics.",
+        "startDate": "2023-01-15T00:00:00.000Z",
+        "endDate": "2023-05-20T00:00:00.000Z"
       },
       {
-        "name": "Google Cloud Professional Architect",
-        "issuingOrganization": "Google Cloud",
-        "issueDate": "2022-08-15T00:00:00.000Z",
-        "expirationDate": "2025-08-15T00:00:00.000Z",
-        "credentialId": "GCP-67890",
-        "credentialURL": "https://google.com/certification/verify/"
+        "title": "Computational Model of Gene Regulatory Networks",
+        "description": "Course project developing a stochastic simulation of gene expression and regulation. Examined how network topology affects robustness to perturbations.",
+        "startDate": "2022-10-01T00:00:00.000Z",
+        "endDate": "2022-12-15T00:00:00.000Z"
       }
     ],
     "achievements": [
       {
-        "title": "Winner - Hackathon 2023",
-        "description": "Secured 1st place in a national-level AI Hackathon.",
-        "date": "2023-07-15T00:00:00.000Z",
-        "issuer": "Tech Fest India"
+        "title": "Dean's List",
+        "description": "Awarded for academic excellence",
+        "date": "2023-05-15T00:00:00.000Z",
+        "issuer": "University of Science"
       },
       {
-        "title": "Top Performer - AI Research",
-        "description": "Recognized as the top performer in an AI research internship.",
-        "date": "2022-12-10T00:00:00.000Z",
-        "issuer": "SRM University AP"
-      }
-    ],
-    "publications": [
-      {
-        "title": "AI in Healthcare",
-        "publisher": "Springer",
-        "publicationDate": "2022-06-15T00:00:00.000Z",
-        "description": "Research paper on AI applications in healthcare.",
-        "link": "https://example.com/ai-healthcare"
+        "title": "Undergraduate Research Grant",
+        "description": "Competitive funding for independent research",
+        "date": "2023-01-10T00:00:00.000Z",
+        "issuer": "Science Foundation"
       },
       {
-        "title": "Blockchain Security",
-        "publisher": "IEEE",
-        "publicationDate": "2021-10-10T00:00:00.000Z",
-        "description": "A detailed study on blockchain security challenges.",
-        "link": "https://example.com/blockchain-security"
+        "title": "First Place, Science Olympiad",
+        "description": "Regional competition in Computational Biology category",
+        "date": "2022-03-15T00:00:00.000Z",
+        "issuer": "National Science Olympiad"
       }
     ],
-    "createdAt": "2025-03-17T16:59:16.275Z",
-    "updatedAt": "2025-03-17T21:51:35.382Z",
-    "__v": 0,
+    "interests": [
+      {
+        "category": "Academic",
+        "items": ["Complex Systems", "Computational Biology", "Network Science"]
+      },
+      {
+        "category": "Athletics",
+        "items": ["Rock Climbing", "Hiking", "Swimming"]
+      },
+      {
+        "category": "Creative",
+        "items": ["Science Photography", "Data Visualization"]
+      }
+    ],
     "personalInfo": {
       "address": {
-        "street": "123 Main Street",
-        "city": "New York",
-        "state": "NY"
+        "street": "123 University Avenue",
+        "city": "Boston",
+        "state": "MA",
+        "zipCode": "02115"
       },
-      "dateOfBirth": "1990-05-20T00:00:00.000Z",
-      "email": "john.doe@example.com",
-      "firstName": "maheep",
-      "lastName": "Doe",
-      "phone": "1234567890",
-      "resume": "https://example.com/resume.pdf"
+      "email": "student@university.edu",
+      "firstName": "Alex",
+      "lastName": "Morgan"
     },
     "socials": {
-      "linkedIn": "https://www.linkedin.com/in/johndoe",
-      "github": "https://github.com/johndoe",
-      "twitter": "https://twitter.com/johndoe",
-      "website": "https://maheep.dev",
-      "medium": "https://medium.com/johndoe",
-      "stackOverflow": "https://stackoverflow.com/users/1234567/johndoe",
-      "leetcode": "https://leetcode.com/johndoe"
+      "website": "https://alexmorgan.science",
+      "github": "https://github.com/alexmorgan",
+      "orcid": "https://orcid.org/0000-0001-2345-6789"
     }
   }
+  
