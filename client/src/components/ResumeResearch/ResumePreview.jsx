@@ -36,189 +36,214 @@ export default function ResumePreview({ data = resumeData }) {
     });
   };
 
-  // Generate LaTeX code from data
+  // Generate LaTeX code using the undergraduate complexity research template
   const generateLatexCode = () => {
-    // Skills as comma-separated list
-    const skillsList = data.skills.join(', ');
-    
-    // Work experience entries
-    let workExEntries = '';
-    data.workEx.forEach(exp => {
-      workExEntries += `
-\\resumeentry
-{${exp.position} at ${exp.company}}
-{${formatDate(exp.startDate)} - ${exp.isCurrent ? 'Present' : formatDate(exp.endDate)}}
-{${exp.description}}
-
-`;
-    });
-    
-    // Project entries
-    let projectEntries = '';
-    data.projects.forEach(project => {
-      const technologies = project.technologiesUsed.join(', ');
-      projectEntries += `
-\\resumeentry
-{${project.title} \\quad \\href{${project.projectLink}}{\\faGithub}}
-{${formatDate(project.startDate)} - ${formatDate(project.endDate)}}
-{Technologies: ${technologies}}
-{${project.description}}
-
-`;
-    });
-    
-    // Certification entries
-    let certEntries = '';
-    data.certifications.forEach(cert => {
-      certEntries += `
-\\resumeentry
-{${cert.name} \\hfill \\href{${cert.credentialURL}}{\\faExternalLink\\ Verify Credential}}
-{${formatDate(cert.issueDate)} - ${formatDate(cert.expirationDate)}}
-{${cert.issuingOrganization}}
-
-`;
-    });
-    
-    // Achievement entries
-    let achievementItems = '';
-    data.achievements.forEach(achievement => {
-      achievementItems += `    \\item \\textbf{${achievement.title}} (${formatDate(achievement.date)}): ${achievement.description}\n`;
-    });
-    
     // Education entries
     let educationEntries = '';
     data.academic.forEach(edu => {
       educationEntries += `
-\\resumeentry
-{${edu.degree} in ${edu.fieldOfStudy}, ${edu.institution}}
-{${formatDate(edu.startDate)} - ${formatDate(edu.endDate)}}
-{Grade: ${edu.grade}}
-{${edu.description}}
-
+    \\resumeSubheading
+        {${edu.institution}}{${formatDate(edu.startDate)} -- ${formatDate(edu.endDate)}}
+        {${edu.degree} in ${edu.fieldOfStudy}}{${edu.location || ''}}
+      \\resumeItemListStart
+        \\small\\resumeItem{${edu.description || ''}}
+        ${edu.achievements ? `\\resumeItem{${edu.achievements}}` : ''}
+      \\resumeItemListEnd
 `;
     });
     
-    // Complete LaTeX document
+    // Research Experience entries
+    let researchEntries = '';
+    const researchExperiences = data.workEx.filter(exp => exp.type === 'research');
+    researchExperiences.forEach(exp => {
+      researchEntries += `
+    \\resumeSubheading
+        {${exp.position}}{${formatDate(exp.startDate)} -- ${exp.isCurrent ? 'Present' : formatDate(exp.endDate)}}
+        {${exp.company}}{${exp.location || ''}}
+      \\resumeItemListStart
+        \\small\\resumeItem{${exp.description.replace(/\n/g, ' ')}}
+        ${exp.achievements ? exp.achievements.map(a => `\\resumeItem{${a}}`).join('\n        ') : ''}
+      \\resumeItemListEnd
+`;
+    });
+    
+    // Other Experience entries
+    let otherExpEntries = '';
+    const otherExperiences = data.workEx.filter(exp => exp.type !== 'research');
+    otherExperiences.forEach(exp => {
+      otherExpEntries += `
+    \\resumeSubheading
+      {${exp.position}}{${formatDate(exp.startDate)} -- ${exp.isCurrent ? 'Present' : formatDate(exp.endDate)}}
+      {${exp.company}}{${exp.location || ''}}
+      \\resumeItemListStart
+        \\small\\resumeItem{${exp.description.replace(/\n/g, ' ')}}
+        ${exp.achievements ? exp.achievements.map(a => `\\resumeItem{${a}}`).join('\n        ') : ''}
+      \\resumeItemListEnd
+`;
+    });
+    
+    // Projects as Research Presentations
+    let projectEntries = '';
+    data.projects.forEach(project => {
+      projectEntries += `    {${project.title} -- ${project.description.substring(0, 100)}${project.description.length > 100 ? '...' : ''}} \\\\\n`;
+    });
+    
+    // Awards & Honors
+    let awardsEntries = '';
+    data.achievements.forEach(achievement => {
+      awardsEntries += `
+    \\resumeSubheading
+    {${achievement.title}}{}
+    {${achievement.issuer || ''}}{${formatDate(achievement.date)}}
+`;
+    });
+    
+    // Skills
+    let skillsSection = '';
+    const skillCategories = {};
+    
+    // Group skills by category if available
+    data.skills.forEach(skill => {
+      const category = skill.category || 'General';
+      if (!skillCategories[category]) {
+        skillCategories[category] = [];
+      }
+      skillCategories[category].push(skill.name || skill);
+    });
+    
+    Object.entries(skillCategories).forEach(([category, skills]) => {
+      skillsSection += `     \\textbf{${category}}{: ${skills.join(', ')}} \\\\\n`;
+    });
+    
+    // Complete LaTeX document using the undergraduate template
     const latex = `\\documentclass[letterpaper,11pt]{article}
 
+\\usepackage{latexsym}
 \\usepackage[empty]{fullpage}
-\\usepackage{xcolor}
-\\usepackage{geometry}
-\\usepackage[hidelinks]{hyperref}
-\\usepackage{fontawesome5}
 \\usepackage{titlesec}
+\\usepackage{marvosym}
+\\usepackage[usenames,dvipsnames]{color}
+\\usepackage{verbatim}
 \\usepackage{enumitem}
-\\usepackage{xparse}
+\\usepackage[hidelinks]{hyperref}
+\\usepackage{fancyhdr}
+\\usepackage[english]{babel}
 \\usepackage{tabularx}
+\\usepackage{multicol}
+\\input{glyphtounicode}
 
-% Document settings
-\\geometry{left=0.6in,right=0.6in,top=0.5in,bottom=0.5in}
-\\pagestyle{empty}
-\\raggedbottom
+\\usepackage{baskervillef}
+\\usepackage[T1]{fontenc}
+
+\\pagestyle{fancy}
+\\fancyhf{} 
+\\fancyfoot{}
+\\setlength{\\footskip}{10pt}
+\\renewcommand{\\headrulewidth}{0pt}
+\\renewcommand{\\footrulewidth}{0pt}
+
+\\addtolength{\\oddsidemargin}{0.0in}
+\\addtolength{\\evensidemargin}{0.0in}
+\\addtolength{\\textwidth}{0.0in}
+\\addtolength{\\topmargin}{0.2in}
+\\addtolength{\\textheight}{0.0in}
+
+\\urlstyle{same}
+
 \\raggedright
-\\setlength{\\tabcolsep}{0pt}
-\\setlength{\\parindent}{0pt}
+\\setlength{\\tabcolsep}{0in}
 
-% Define custom colors
-\\definecolor{primary}{RGB}{52, 73, 94}   % Dark blue-gray (primary color)
-\\definecolor{accent}{RGB}{41, 128, 185}  % Blue (accent color)
-\\definecolor{heading}{RGB}{44, 62, 80}   % Darker blue-gray for headings
-\\definecolor{subheading}{RGB}{52, 73, 94} % Same as primary for subheadings
-\\definecolor{sectionline}{RGB}{211, 211, 211} % Light gray for section lines
-\\definecolor{bodytext}{RGB}{50, 50, 50}  % Dark gray for body text
+\\titleformat{\\section}{
+  \\it\\vspace{3pt}
+}{}{0em}{}[\\color{black}\\titlerule\\vspace{-5pt}]
 
-% Section formatting
-\\titleformat{\\section}
-  {\\color{heading}\\scshape\\Large}
-  {}{0em}
-  {}
-  [{\\color{sectionline}\\titlerule[0.8pt]}]
-\\titlespacing*{\\section}{0pt}{10pt}{6pt}
+\\pdfgentounicode=1
 
-% Subsection formatting
-\\titleformat{\\subsection}
-  {\\color{subheading}\\bfseries}
-  {}{0em}
-  {}
-\\titlespacing*{\\subsection}{0pt}{5pt}{0pt}
-
-% Name and contact at the top
-\\newcommand{\\name}[1]{{\\Huge\\bfseries\\color{primary}#1}\\vspace{2pt}}
-\\newcommand{\\contact}[5]{
- \\begin{center}
-    \\begin{tabular}{c c c c}
-        \\href{mailto:#1}{\\faEnvelope\\ #1} \\hspace{1cm} &
-        \\href{#3}{\\faGlobe\\ #2} \\hspace{1cm} &
-        \\href{#4}{\\faLinkedin\\ #3} \\hspace{1cm} &
-        \\href{#5}{\\faGithub\\ #4}
-    \\end{tabular}
-\\end{center}
-
-    \\vspace{-8pt}
+\\newcommand{\\resumeItem}[1]{
+  \\item{
+    {#1 \\vspace{-4pt}}
+  }
 }
 
-% Command for entries with dates on the right
-\\newcommand{\\datedentry}[2]{
-  \\noindent\\begin{tabularx}{\\textwidth}{X r}
-    {\\bfseries#1} & {\\color{accent}\\small#2} \\\\
-  \\end{tabularx}
+\\newcommand{\\resumeSubheading}[4]{
+  \\vspace{-2pt}\\item
+    \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
+      \\textbf{#1} & #2 \\\\
+      \\textit{\\small #3} & \\textit{\\small #4} \\\\
+    \\end{tabular*}\\vspace{-10pt}
 }
 
-% Command for entries with organization and date
-\\newcommand{\\resumeentry}[4]{
-  \\datedentry{#1}{#2}
-  {\\itshape#3}\\\\
-  #4\\vspace{6pt}
-}
-
-% Skills with bullet points
-\\newcommand{\\skills}[2]{
-  \\textbf{#1}: #2 \\\\
-}
+\\newcommand{\\resumeSubItem}[1]{\\resumeItem{#1}\\vspace{-3pt}}
+\\renewcommand\\labelitemii{$\\vcenter{\\hbox{\\tiny$\\bullet$}}$}
+\\newcommand{\\resumeSubHeadingListStart}{\\begin{itemize}[leftmargin=0.15in, label={}]}
+\\newcommand{\\resumeSubHeadingListEnd}{\\end{itemize}}
+\\newcommand{\\resumeItemListStart}{\\begin{itemize}}
+\\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{-2pt}}
 
 \\begin{document}
-\\color{bodytext}
 
-% Header with name and title
 \\begin{center}
-  \\name{${data.personalInfo.firstName} ${data.personalInfo.lastName}}\\\\
-  \\vspace{1pt}
-  {\\large\\itshape Software Engineer}
+    {\\LARGE ${data.personalInfo.firstName} ${data.personalInfo.lastName}} \\\\ \\vspace{0pt}
+    \\begin{multicols}{2}
+    \\begin{flushleft}
+    \\large{${data.personalInfo.address?.street || '111 Street Ave'}} \\\\
+    \\large{${data.personalInfo.address?.city || 'City'}, ${data.personalInfo.address?.state || 'State'} ${data.personalInfo.address?.zipCode || ''}} \\\\
+    \\end{flushleft}
+    
+    \\begin{flushright}
+    \\href{${data.socials?.website || '#'}} \\large{${data.socials?.website?.replace(/^https?:\/\//, '') || 'personal website'}} \\\\
+    \\href{mailto:${data.personalInfo.email}} \\large{${data.personalInfo.email}}
+    \\end{flushright}
+    \\end{multicols}
 \\end{center}
 
-% Contact information
-\\contact{${data.personalInfo.email}}{${data.personalInfo.phone}}{${data.socials.website || 'maheep.dev'}}{${data.socials.linkedIn.replace('https://www.linkedin.com/in/', '')}}{${data.socials.github.replace('https://github.com/', '')}}
-
-
-% Work Experience
-\\section{Professional Experience}
-
-${workExEntries}
-
-% Projects
-\\section{Projects}
-
-${projectEntries}
-
-\\section{Certifications}
-
-${certEntries}
-
-% Skills section
-\\section{Technical Skills}
-${skillsList}
-
-
-% Achievements
-\\section{Achievements}
-\\begin{itemize}[leftmargin=15pt, itemsep=2pt]
-${achievementItems}
-\\end{itemize}
-
-% Education
+%-----------EDUCATION-----------
 \\section{Education}
-
+\\resumeSubHeadingListStart
 ${educationEntries}
+\\resumeSubHeadingListEnd
+
+//%-----------RESEARCH EXPERIENCE-----------
+\\section{Research Experience}
+\\resumeSubHeadingListStart
+${researchEntries}
+\\resumeSubHeadingListEnd
+
+//%-----------OTHER EXPERIENCE-----------
+\\section{Other Experience}
+\\resumeSubHeadingListStart
+${otherExpEntries}
+\\resumeSubHeadingListEnd
+
+//%-----------RESEARCH PRESENTATIONS-----------
+\\section{Research Presentations} 
+\\begin{itemize}[leftmargin=0.15in, label={}]
+    \\normalsize{\\item{
+${projectEntries}
+}}
+ \\end{itemize}
+
+//%-----------AWARDS & HONORS-----------
+\\section{Awards \\& Honors} 
+\\resumeSubHeadingListStart
+${awardsEntries}
+\\resumeSubHeadingListEnd
+
+//%-----------SKILLS-----------
+\\section{Specialized Skills}
+\\begin{itemize}[leftmargin=0.15in, label={}]
+    \\normalsize{\\item{
+${skillsSection}
+    }}
+ \\end{itemize}
+
+//%-----------OTHER INTERESTS-----------
+\\section{Other Interests}
+\\begin{itemize}[leftmargin=0.15in, label={}]
+    \\normalsize{\\item{
+     \\textbf{${data.interests?.[0]?.category || 'Interests'}}{: ${(data.interests?.[0]?.items || ['Reading', 'Traveling']).join(', ')} } \\\\
+    }}    
+ \\end{itemize}
 
 \\end{document}`;
 
@@ -294,18 +319,19 @@ ${educationEntries}
         });
       }
       
-      // Work Experience
-      if (data.workEx && data.workEx.length > 0) {
+      // Research Experience
+      const researchExperiences = data.workEx.filter(exp => exp.type === 'research');
+      if (researchExperiences.length > 0) {
         doc.setDrawColor(70, 108, 247);
         doc.setLineWidth(0.5);
         doc.line(20, yPosition - 3, 190, yPosition - 3);
         
         doc.setFontSize(14);
         doc.setTextColor(43, 58, 103);
-        doc.text("Work Experience", 20, yPosition);
+        doc.text("Research Experience", 20, yPosition);
         yPosition += 8;
         
-        data.workEx.forEach(exp => {
+        researchExperiences.forEach(exp => {
           doc.setFontSize(12);
           doc.setTextColor(43, 58, 103);
           doc.text(`${exp.position} | ${exp.company}`, 20, yPosition);
@@ -327,7 +353,41 @@ ${educationEntries}
         });
       }
       
-      // Projects
+      // Other Experience
+      const otherExperiences = data.workEx.filter(exp => exp.type !== 'research');
+      if (otherExperiences.length > 0) {
+        doc.setDrawColor(70, 108, 247);
+        doc.setLineWidth(0.5);
+        doc.line(20, yPosition - 3, 190, yPosition - 3);
+        
+        doc.setFontSize(14);
+        doc.setTextColor(43, 58, 103);
+        doc.text("Other Experience", 20, yPosition);
+        yPosition += 8;
+        
+        otherExperiences.forEach(exp => {
+          doc.setFontSize(12);
+          doc.setTextColor(43, 58, 103);
+          doc.text(`${exp.position} | ${exp.company}`, 20, yPosition);
+          yPosition += 5;
+          
+          doc.setFontSize(10);
+          doc.setTextColor(100, 116, 139);
+          doc.text(`${formatDate(exp.startDate)} - ${exp.isCurrent ? 'Present' : formatDate(exp.endDate)}`, 20, yPosition);
+          yPosition += 5;
+          
+          if (exp.description) {
+            doc.setTextColor(51, 65, 85);
+            const descLines = doc.splitTextToSize(exp.description, 170);
+            doc.text(descLines, 20, yPosition);
+            yPosition += (descLines.length * 5);
+          }
+          
+          yPosition += 5;
+        });
+      }
+      
+      // Projects as Research Presentations
       if (data.projects && data.projects.length > 0) {
         doc.setDrawColor(70, 108, 247);
         doc.setLineWidth(0.5);
@@ -335,7 +395,7 @@ ${educationEntries}
         
         doc.setFontSize(14);
         doc.setTextColor(43, 58, 103);
-        doc.text("Projects", 20, yPosition);
+        doc.text("Research Presentations", 20, yPosition);
         yPosition += 8;
         
         data.projects.forEach(project => {
@@ -358,77 +418,11 @@ ${educationEntries}
             yPosition += (descLines.length * 5);
           }
           
-          if (project.technologiesUsed && project.technologiesUsed.length > 0) {
-            doc.setTextColor(100, 116, 139);
-            const techText = `Technologies: ${project.technologiesUsed.join(", ")}`;
-            const techLines = doc.splitTextToSize(techText, 170);
-            doc.text(techLines, 20, yPosition);
-            yPosition += (techLines.length * 5);
-          }
-          
-          if (project.projectLink) {
-            doc.setTextColor(70, 108, 247);
-            doc.text(`Project Link: ${project.projectLink}`, 20, yPosition);
-            yPosition += 5;
-          }
-          
           yPosition += 5;
         });
       }
       
-      // Skills
-      if (data.skills && data.skills.length > 0) {
-        doc.setDrawColor(70, 108, 247);
-        doc.setLineWidth(0.5);
-        doc.line(20, yPosition - 3, 190, yPosition - 3);
-        
-        doc.setFontSize(14);
-        doc.setTextColor(43, 58, 103);
-        doc.text("Skills", 20, yPosition);
-        yPosition += 8;
-        
-        doc.setFontSize(10);
-        doc.setTextColor(51, 65, 85);
-        
-        const skillsList = data.skills.join(" • ");
-        const skillsLines = doc.splitTextToSize(skillsList, 170);
-        doc.text(skillsLines, 20, yPosition);
-        yPosition += (skillsLines.length * 5) + 5;
-      }
-      
-      // Certifications
-      if (data.certifications && data.certifications.length > 0) {
-        doc.setDrawColor(70, 108, 247);
-        doc.setLineWidth(0.5);
-        doc.line(20, yPosition - 3, 190, yPosition - 3);
-        
-        doc.setFontSize(14);
-        doc.setTextColor(43, 58, 103);
-        doc.text("Certifications", 20, yPosition);
-        yPosition += 8;
-        
-        data.certifications.forEach(cert => {
-          doc.setFontSize(12);
-          doc.setTextColor(43, 58, 103);
-          doc.text(cert.name, 20, yPosition);
-          yPosition += 5;
-          
-          doc.setFontSize(10);
-          doc.setTextColor(100, 116, 139);
-          doc.text(`${cert.issuingOrganization} | ${formatDate(cert.issueDate)}`, 20, yPosition);
-          yPosition += 5;
-          
-          if (cert.credentialURL) {
-            doc.setTextColor(70, 108, 247);
-            doc.text(`Credential: ${cert.credentialURL}`, 20, yPosition);
-            yPosition += 5;
-          }
-          
-          yPosition += 3;
-        });
-      }
-      
-      // Achievements
+      // Awards & Honors
       if (data.achievements && data.achievements.length > 0) {
         doc.setDrawColor(70, 108, 247);
         doc.setLineWidth(0.5);
@@ -436,7 +430,7 @@ ${educationEntries}
         
         doc.setFontSize(14);
         doc.setTextColor(43, 58, 103);
-        doc.text("Achievements", 20, yPosition);
+        doc.text("Awards & Honors", 20, yPosition);
         yPosition += 8;
         
         data.achievements.forEach(achievement => {
@@ -459,6 +453,54 @@ ${educationEntries}
           
           yPosition += 3;
         });
+      }
+      
+      // Skills
+      if (data.skills && data.skills.length > 0) {
+        doc.setDrawColor(70, 108, 247);
+        doc.setLineWidth(0.5);
+        doc.line(20, yPosition - 3, 190, yPosition - 3);
+        
+        doc.setFontSize(14);
+        doc.setTextColor(43, 58, 103);
+        doc.text("Specialized Skills", 20, yPosition);
+        yPosition += 8;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(51, 65, 85);
+        
+        // Group skills by category here, similar to what we do in generateLatexCode
+        const skillCategories = {};
+        
+        // Group skills by category if available
+        data.skills.forEach(skill => {
+          const category = skill.category || 'General';
+          if (!skillCategories[category]) {
+            skillCategories[category] = [];
+          }
+          skillCategories[category].push(skill.name || skill);
+        });
+        
+        Object.entries(skillCategories).forEach(([category, skills]) => {
+          doc.text(`${category}: ${skills.join(", ")}`, 20, yPosition);
+          yPosition += 5;
+        });
+      }
+      
+      // Other Interests
+      if (data.interests && data.interests.length > 0) {
+        doc.setDrawColor(70, 108, 247);
+        doc.setLineWidth(0.5);
+        doc.line(20, yPosition - 3, 190, yPosition - 3);
+        
+        doc.setFontSize(14);
+        doc.setTextColor(43, 58, 103);
+        doc.text("Other Interests", 20, yPosition);
+        yPosition += 8;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(51, 65, 85);
+        doc.text(`${data.interests[0].category || 'Interests'}: ${(data.interests[0].items || ['Reading', 'Traveling']).join(', ')}`, 20, yPosition);
       }
       
       // Generate blob and create URL
@@ -588,3 +630,4 @@ ${educationEntries}
     </div>
   );
 }
+
