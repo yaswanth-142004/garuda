@@ -9,7 +9,6 @@ import ProfilePage from './pages/ProfilePage';
 import ResumeDev from './pages/ResumeDev';
 import ResumeResearch from './pages/ResumeResearch'
 import ChooseResume from './pages/ChooseResume';
-import ResumeResearch from './pages/ResumeResearch';
 import ProtectedRoute from './components/ProtectedRoute';
 
 // Resume type components
