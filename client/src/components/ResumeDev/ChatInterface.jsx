@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import resumeData from './resumeData.json';
 
 export default function ChatInterface({ onResumeData }) {
   const [messages, setMessages] = useState([
@@ -47,10 +46,8 @@ export default function ChatInterface({ onResumeData }) {
           { text: `Thanks! Analyzing your profile for a ${jobRole} position...`, sender: 'bot' }
         ]);
         
-        // Mock delay to simulate processing
-        setTimeout(() => {
-          processResume(jobRole, input);
-        }, 2000);
+        // Process the resume with the API
+        processResume(jobRole, input);
       }
     } catch (error) {
       console.error('Error processing request:', error);
@@ -65,22 +62,46 @@ export default function ChatInterface({ onResumeData }) {
 
   const processResume = async (role, description) => {
     try {
-      // Use the actual resume data from the JSON file instead of mock data
-      
-      // Update messages to reflect findings
+      // Add analyzing messages
       setMessages(prev => [
         ...prev,
         { text: `Identifying relevant skills for this position...`, sender: 'bot' },
-        { text: `I found ${resumeData.skills.length} relevant skills for this position.`, sender: 'bot' },
+      ]);
+
+      // Call the FastAPI endpoint to generate the resume
+      const response = await fetch('http://localhost:9990/resume/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json'
+        },
+        body: JSON.stringify({
+          user_profile: {}, // This would need to be populated with user data in a real application
+          resume_template: {}, // This would need template settings if applicable
+          job_description: description,
+          job_role: role // Adding job role as an extra parameter if needed
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const resumeData = await response.json();
+      
+      // Update messages with success information
+      setMessages(prev => [
+        ...prev,
+        { text: `I found ${resumeData.skills?.length || 0} relevant skills for this position.`, sender: 'bot' },
         { text: `Identifying relevant projects for this position...`, sender: 'bot' },
-        { text: `I found ${resumeData.projects.length} relevant projects for this position.`, sender: 'bot' },
+        { text: `I found ${resumeData.projects?.length || 0} relevant projects for this position.`, sender: 'bot' },
         { text: `Identifying relevant work experience...`, sender: 'bot' },
-        { text: `I found ${resumeData.workEx.length} relevant work experiences for this position.`, sender: 'bot' },
+        { text: `I found ${resumeData.workEx?.length || 0} relevant work experiences for this position.`, sender: 'bot' },
         { text: `Generating a tailored summary for your resume...`, sender: 'bot' },
         { text: `Your resume is ready! I've created a tailored resume that highlights your relevant skills and experience for this ${role} position. You can view it in the preview panel and download it as a PDF.`, sender: 'bot' }
       ]);
       
-      // Pass the resume data from the JSON file up to the parent component
+      // Pass the resume data from the API to the parent component
       onResumeData(resumeData);
       
       // Mark process as complete

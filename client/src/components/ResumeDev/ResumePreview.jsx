@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { jsPDF } from 'jspdf';
-import resumeData from './resumeData.json';
 
-export default function ResumePreview({ data = resumeData }) {
+export default function ResumePreview({ data }) {
   const [pdfUrl, setPdfUrl] = useState(null);
   const [latexCode, setLatexCode] = useState(null);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
@@ -38,65 +37,77 @@ export default function ResumePreview({ data = resumeData }) {
 
   // Generate LaTeX code from data
   const generateLatexCode = () => {
+    if (!data || !data.skills) return;
+    
     // Skills as comma-separated list
     const skillsList = data.skills.join(', ');
     
     // Work experience entries
     let workExEntries = '';
-    data.workEx.forEach(exp => {
-      workExEntries += `
+    if (data.workEx) {
+      data.workEx.forEach(exp => {
+        workExEntries += `
 \\resumeentry
 {${exp.position} at ${exp.company}}
 {${formatDate(exp.startDate)} - ${exp.isCurrent ? 'Present' : formatDate(exp.endDate)}}
 {${exp.description}}
 
 `;
-    });
+      });
+    }
     
     // Project entries
     let projectEntries = '';
-    data.projects.forEach(project => {
-      const technologies = project.technologiesUsed.join(', ');
-      projectEntries += `
+    if (data.projects) {
+      data.projects.forEach(project => {
+        const technologies = project.technologiesUsed ? project.technologiesUsed.join(', ') : '';
+        projectEntries += `
 \\resumeentry
-{${project.title} \\quad \\href{${project.projectLink}}{\\faGithub}}
+{${project.title} \\quad \\href{${project.projectLink || ''}}{\\faGithub}}
 {${formatDate(project.startDate)} - ${formatDate(project.endDate)}}
 {Technologies: ${technologies}}
-{${project.description}}
+{${project.description || ''}}
 
 `;
-    });
+      });
+    }
     
     // Certification entries
     let certEntries = '';
-    data.certifications.forEach(cert => {
-      certEntries += `
+    if (data.certifications) {
+      data.certifications.forEach(cert => {
+        certEntries += `
 \\resumeentry
-{${cert.name} \\hfill \\href{${cert.credentialURL}}{\\faExternalLink\\ Verify Credential}}
+{${cert.name} \\hfill \\href{${cert.credentialURL || ''}}{\\faExternalLink\\ Verify Credential}}
 {${formatDate(cert.issueDate)} - ${formatDate(cert.expirationDate)}}
-{${cert.issuingOrganization}}
+{${cert.issuingOrganization || ''}}
 
 `;
-    });
+      });
+    }
     
     // Achievement entries
     let achievementItems = '';
-    data.achievements.forEach(achievement => {
-      achievementItems += `    \\item \\textbf{${achievement.title}} (${formatDate(achievement.date)}): ${achievement.description}\n`;
-    });
+    if (data.achievements) {
+      data.achievements.forEach(achievement => {
+        achievementItems += `    \\item \\textbf{${achievement.title}} (${formatDate(achievement.date)}): ${achievement.description || ''}\n`;
+      });
+    }
     
     // Education entries
     let educationEntries = '';
-    data.academic.forEach(edu => {
-      educationEntries += `
+    if (data.academic) {
+      data.academic.forEach(edu => {
+        educationEntries += `
 \\resumeentry
 {${edu.degree} in ${edu.fieldOfStudy}, ${edu.institution}}
 {${formatDate(edu.startDate)} - ${formatDate(edu.endDate)}}
-{Grade: ${edu.grade}}
-{${edu.description}}
+{Grade: ${edu.grade || ''}}
+{${edu.description || ''}}
 
 `;
-    });
+      });
+    }
     
     // Complete LaTeX document
     const latex = `\\documentclass[letterpaper,11pt]{article}
@@ -181,13 +192,13 @@ export default function ResumePreview({ data = resumeData }) {
 
 % Header with name and title
 \\begin{center}
-  \\name{${data.personalInfo.firstName} ${data.personalInfo.lastName}}\\\\
+  \\name{${data.personalInfo?.firstName || ''} ${data.personalInfo?.lastName || ''}}\\\\
   \\vspace{1pt}
   {\\large\\itshape Software Engineer}
 \\end{center}
 
 % Contact information
-\\contact{${data.personalInfo.email}}{${data.personalInfo.phone}}{${data.socials.website || 'maheep.dev'}}{${data.socials.linkedIn.replace('https://www.linkedin.com/in/', '')}}{${data.socials.github.replace('https://github.com/', '')}}
+\\contact{${data.personalInfo?.email || ''}}{${data.personalInfo?.phone || ''}}{${data.socials?.website || 'maheep.dev'}}{${data.socials?.linkedIn?.replace('https://www.linkedin.com/in/', '') || ''}}{${data.socials?.github?.replace('https://github.com/', '') || ''}}
 
 
 % Work Experience
@@ -208,7 +219,6 @@ ${certEntries}
 \\section{Technical Skills}
 ${skillsList}
 
-
 % Achievements
 \\section{Achievements}
 \\begin{itemize}[leftmargin=15pt, itemsep=2pt]
@@ -226,6 +236,8 @@ ${educationEntries}
   };
 
   const generatePdf = async () => {
+    if (!data) return;
+    
     setIsGeneratingPdf(true);
     try {
       const doc = new jsPDF();
@@ -447,7 +459,8 @@ ${educationEntries}
           
           doc.setFontSize(10);
           doc.setTextColor(100, 116, 139);
-          doc.text(`${achievement.issuer} | ${formatDate(achievement.date)}`, 20, yPosition);
+          const issuerText = achievement.issuer ? `${achievement.issuer} | ` : '';
+          doc.text(`${issuerText}${formatDate(achievement.date)}`, 20, yPosition);
           yPosition += 5;
           
           if (achievement.description) {
@@ -477,7 +490,7 @@ ${educationEntries}
     
     const link = document.createElement('a');
     link.href = pdfUrl;
-    const fileName = `${data.personalInfo?.firstName || 'Resume'}_${data.personalInfo?.lastName || ''}.pdf`.replace(/\s+/g, '_');
+    const fileName = `${data?.personalInfo?.firstName || 'Resume'}_${data?.personalInfo?.lastName || ''}.pdf`.replace(/\s+/g, '_');
     link.download = fileName;
     document.body.appendChild(link);
     link.click();
