@@ -1,83 +1,64 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { cn } from "../lib/utils.js";
-import { Button } from "../components/ui/button.jsx";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import Logo from "../assets/logo.png";
-import Bg from "../assets/background.webp";
+import React from "react";
+import { FcGoogle } from "react-icons/fc"; 
+import { auth } from "../lib/firebaseConfig"; 
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom"; 
+import { FollowerPointerCard } from '@/components/ui/Pointer'
 
-export default function AuthPage() {
-  const navigate = useNavigate();
-  const id = "1234";
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+const SignIn = () => {
+  const navigate = useNavigate(); 
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
     try {
-      console.log("Registering:", { username, password });
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      navigate(`/${id}/dashboard`);
+      const result = await signInWithPopup(auth, provider);
+      console.log("User signed in:", result.user);
+      // Redirect to /dashboard after successful sign-in
+      navigate("/dashboard");
     } catch (error) {
-      console.error("Signup failed", error);
-    } finally {
-      setLoading(false);
+      console.error("Error during sign-in:", error.message);
+      navigate("/login")
     }
   };
 
   return (
-    <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="flex flex-col gap-4 p-6 md:p-10">
-        <div className="flex flex-col flex-1 items-center justify-center gap-10">
-          <div className="flex justify-center gap-2 md:justify-center">
-            <Link to="/" className="flex items-center gap-2 font-medium">
-              <div className="flex w-28 items-center justify-center rounded-md text-primary-foreground">
-                <img src={Logo} alt="Logo" />
-              </div>
-            </Link>
+    <FollowerPointerCard>
+    <div className="flex flex-col justify-center items-center bg-zinc-950 min-h-screen pb-5">
+    
+      <div className="mx-auto flex w-full flex-col justify-center px-5 md:max-w-[50%] lg:max-w-[50%]">
+        <a className="mt-10 w-fit text-white" href="/">
+          <div className="flex w-fit items-center">
+            <svg
+              stroke="currentColor"
+              fill="currentColor"
+              viewBox="0 0 320 512"
+              className="mr-3 h-[13px] w-[8px] text-white"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+            </svg>
+            <p className="text-sm text-white">Back to Landing Page</p>
           </div>
-          <div className="w-full max-w-xs">
-            <form onSubmit={handleRegister} className={cn("flex flex-col gap-6")}>
-              <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-2xl font-bold">Dive into your account</h1>
-              </div>
-              <div className="grid gap-6">
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="text"
-                    type="text"
-                    placeholder="admin"
-                    // required
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    // required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Signing up..." : "Sign up"}
-                </Button>
-              </div>
-            </form>
+        </a>
+        <div className="mt-8 flex flex-col mx-auto w-[350px] max-w-[450px]">
+          <p className="text-[32px] font-bold text-white">Sign In</p>
+          <p className="mt-2.5 text-zinc-400">Enter your email and password to sign in!</p>
+          <div className="mt-8">
+            <button
+              onClick={handleGoogleSignIn} // Attach the sign-in handler
+              className="flex items-center justify-center w-full text-white py-3 border border-zinc-800 hover:bg-accent"
+            >
+              <FcGoogle className="mr-2 text-xl" /> 
+              <span>Sign in with Google</span>
+            </button>
           </div>
         </div>
       </div>
-      <div className="relative hidden bg-muted lg:block">
-        <img src={Bg} alt="Background" className="absolute inset-0 h-full w-full object-cover" />
-      </div>
+   
     </div>
+    </FollowerPointerCard>
   );
-}
+};
+
+export default SignIn;

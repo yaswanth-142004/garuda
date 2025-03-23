@@ -8,6 +8,7 @@ import CertificationInfo from "@/components/Profile/CertificationInfo";
 import AchievementInfo from "@/components/Profile/AchievementInfo";
 import PublicationInfo from "@/components/Profile/PublicationInfo";
 import SocialInfo from "@/components/Profile/SocialInfo";
+import Topbar from "@/components/Topbar";
 import { UserPen, School, FolderGit2, Brain, Building2, ScrollText, FileBadge, Trophy, Link } from "lucide-react";
 
 const tabs = [
@@ -26,29 +27,36 @@ function ProfilePage() {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div className="flex px-4 h-[calc(100vh-6rem)]">
-      {/* Sidebar Tabs */}
-      <div className="w-1/4 space-y-4 sticky top-16 z-50">
-        {tabs.map((tab, index) => (
-          <button
-            key={index}
-            className={`block w-full text-left p-2 rounded-lg transition-all ${
-              activeTab === index ? "bg-accent text-accent-foreground" : ""
-            }`}
-            onClick={() => setActiveTab(index)}
-          >
-            <div className="flex items-center">
-              <div className="mr-2">{tab.icon}</div>
-              <span>{tab.name}</span>
-            </div>
-            {/* {tab.name} */}
-          </button>
-        ))}
+    <div className="flex flex-col h-screen bg-black">
+      {/* Topbar */}
+      <div className="sticky top-0 z-50 mb-7">
+        <Topbar />
       </div>
-      
-      {/* Content Area */}
-      <div className="w-3/4 px-4 flex justify-center  overflow-y-auto">
-        {tabs[activeTab].component}
+
+      {/* Main Content */}
+      <div className="flex px-4 h-[calc(100vh-6rem)] ">
+        {/* Sidebar Tabs */}
+        <div className="w-1/4 space-y-4 sticky top-16 z-50 ">
+          {tabs.map((tab, index) => (
+            <button
+              key={index}
+              className={`block w-full text-left p-2 rounded-lg transition-all ${
+                activeTab === index ? "bg-accent text-accent-foreground" : ""
+              }`}
+              onClick={() => setActiveTab(index)}
+            >
+              <div className="flex items-center ">
+                <div className="mr-2 ">{tab.icon}</div>
+                <span>{tab.name}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Content Area */}
+        <div className="w-3/4 px-4 flex justify-center overflow-y-auto" >
+          {tabs[activeTab].component}
+        </div>
       </div>
     </div>
   );

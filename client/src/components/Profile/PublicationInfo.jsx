@@ -34,7 +34,7 @@ function PublicationInfo({ formRef, onSuccess }) {
     };
 
     return (
-        <Card className="p-4 w-full max-w-3xl bg-background border-none shadow-none">
+        <Card className="p-4 w-full max-w-3xl bg-black border-none shadow-none">
             {isSubmitted ? (
                 <div className="space-y-4 text-lg">
                     <h2 className="text-xl font-semibold">Publications</h2>
@@ -88,7 +88,7 @@ function PublicationInfo({ formRef, onSuccess }) {
                             </div>
                         ))}
                         <Button type="button" variant="outline" onClick={addPublication}>Add Another Publication</Button>
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" className="ml-4">Submit</Button>
                     </form>
                 </Form>
             )}
